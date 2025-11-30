@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Corazón Nocturno</title>
+<style>
+    body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+        background: #1a1a2e;
+        font-family: 'Arial', sans-serif;
+        color: #fff;
+    }
+
+    h1 {
+        margin-bottom: 20px;
+        color: #ff3366;
+    }
+
+    /* Contenedor del corazón */
+    .heart-container {
+        position: relative;
+        width: 200px;
+        height: 180px;
+    }
+
+    /* Corazón usando CSS */
+    .heart {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+    }
+
+    .heart::before,
+    .heart::after {
+        content: "";
+        position: absolute;
+        width: 100px;
+        height: 160px;
+        background: #ff3366;
+        border-radius: 100px 100px 0 0;
+        top: 0;
+    }
+
+    .heart::before {
+        left: 100px;
+        transform: rotate(-45deg);
+        transform-origin: 0 100%;
+    }
+
+    .heart::after {
+        left: 0;
+        transform: rotate(45deg);
+        transform-origin: 100% 100%;
+    }
+
+    /* Nombre centrado sobre el corazón */
+    .heart span {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 24px;
+        font-weight: bold;
+        color: white;
+        text-align: center;
+        z-index: 1; /* Importante para que esté sobre el corazón */
+        pointer-events: none;
+    }
+
+    /* Animación de latido */
+    @keyframes beat {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.1); }
+    }
+
+    /* Input y botón */
+    #inputNombre {
+        padding: 10px;
+        font-size: 16px;
+        margin-top: 20px;
+        border-radius: 5px;
+        border: none;
+    }
+
+    button {
+        padding: 10px 20px;
+        margin-top: 10px;
+        font-size: 16px;
+        border: none;
+        border-radius: 5px;
+        background-color: #ff3366;
+        color: white;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+
+    button:hover {
+        background-color: #ff6699;
+    }
+
+</style>
+</head>
+<body>
+<h1>Mi corazón late por ti</h1>
+
+<div class="heart-container" id="heart">
+    <div class="heart">
+        <span id="nombre">Tu Nombre</span>
+    </div>
+</div>
+
+<input type="text" id="inputNombre" placeholder="Escribe tu nombre">
+<button id="btnNombre">Mostrar en el corazón</button>
+
+<script>
+const btn = document.getElementById('btnNombre');
+const input = document.getElementById('inputNombre');
+const nombreSpan = document.getElementById('nombre');
+const heart = document.querySelector('.heart');
+
+btn.addEventListener('click', () => {
+    const nombre = input.value.trim();
+    if(nombre !== "") {
+        nombreSpan.textContent = nombre;
+
+        // Reiniciar animación para que se vea el latido cada vez
+        heart.style.animation = 'none';
+        setTimeout(() => {
+            heart.style.animation = 'beat 0.6s infinite';
+        }, 10);
+    }
+});
+</script>
+</body>
+</html>
+
